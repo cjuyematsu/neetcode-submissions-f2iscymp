@@ -11,25 +11,25 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-            
-        q = deque()
-        q.append(root)
+        
+        q = deque([root])
         sol = []
 
         while q:
-            num_els = len(q)
-            cur = []
+            level_size = len(q)
+            level = []
 
-            for _ in range(num_els):
-                node = q.popleft()
-                cur.append(node.val)
+            for _ in range(level_size):
+                node = q.pop()
+                level.append(node.val)
 
                 if node.left:
-                    q.append(node.left)
-
+                    q.appendleft(node.left)
+                
                 if node.right:
-                    q.append(node.right)
-            
-            sol.append(cur[:])
+                    q.appendleft(node.right)
 
+            if len(level) != 0:
+                sol.append(level)
+                
         return sol
